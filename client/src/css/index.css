@@ -60,8 +60,8 @@ header .logo img {
 
 .product-list .product-item img {
     width: 100%;
-    height: 240px;
-    object-fit: cover;
+    height: 180px;
+    object-fit: contain;
     border-radius: 8px 8px 0 0;
 }
 
