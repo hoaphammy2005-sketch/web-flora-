@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh mục sản phẩm - Flora</title>
+    <link rel="shortcut icon" href="./img/cate2_icon.webp" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/index.css">
+</head>
+<body class="bg-light">
+    <div class="page_wrapper">
+        <div class="banner-group" style="height: auto; padding-bottom: 20px;">
+            <header>
+                <div class="container d-flex justify-content-between align-items-center">
+                    <div class="logo">
+                        <img src="./img/cate2_icon.PNG" alt="FLORA" style="width: 100px;">
+                    </div>
+                    <ul class="nav pe-4 align-items-center">
+                        <li class="nav-item"><a href="./index.html" class="nav-link text-white">Home</a></li>
+                        <li class="nav-item"><a href="./menu.html" class="nav-link text-warning fw-bold">Mục</a></li>
+                        <li class="nav-item"><a href="#" class="nav-link text-white" onclick="viewWallet()">Ví</a></li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link text-white" onclick="viewCart()">
+                                <i class="fa-solid fa-bag-shopping"></i> <span id="cart-count" class="badge bg-danger rounded-pill">0</span>
+                            </a>
+                        </li>
+                        <div class="profile ms-2">
+                            <button type="button" id="profile-dropdown" class="dropdown-toggle btn btn-outline-light" data-bs-toggle="dropdown">
+                                <i class="fa-solid fa-user"></i> Tài Khoản
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="./register.html">Đăng Kí</a></li>
+                                <li><a class="dropdown-item" href="./login.html">Đăng Nhập</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#" onclick="viewHistory()"><i class="fa-solid fa-clock-rotate-left"></i> Lịch sử đơn hàng</a></li>
+                                <li><a class="dropdown-item text-danger" href="#" onclick="logoutUser()"><i class="fa-solid fa-right-from-bracket"></i> Đăng xuất</a></li>
+                            </ul>
+                        </div>
+                    </ul>
+                </div>
+            </header>
+        </div>
+
+        <section class="container my-5">
+            <div class="row">
+                <div class="col-lg-3 col-md-4 mb-4">
+                    <div class="card border-0 shadow-sm sticky-top" style="top: 20px;">
+                        <div class="card-header bg-primary text-white fw-bold">
+                            <i class="fa-solid fa-list-ul"></i> DANH MỤC
+                        </div>
+                        <div class="list-group list-group-flush" id="category-list">
+                            <button class="list-group-item list-group-item-action active fw-bold" onclick="filterData('Tất cả', this)">Tất cả sản phẩm</button>
+                            <button class="list-group-item list-group-item-action" onclick="filterData('Nhẫn', this)">Nhẫn</button>
+                            <button class="list-group-item list-group-item-action" onclick="filterData('Nhẫn cưới', this)">Nhẫn cưới</button>
+                            <button class="list-group-item list-group-item-action" onclick="filterData('Vòng tay', this)">Vòng tay</button>
+                            <button class="list-group-item list-group-item-action" onclick="filterData('Bông tai', this)">Bông tai</button>
+                            <button class="list-group-item list-group-item-action" onclick="filterData('Dây chuyền', this)">Dây chuyền</button>
+                            <button class="list-group-item list-group-item-action" onclick="filterData('Khác', this)">Khác</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-9 col-md-8">
+                    <div class="d-flex justify-content-between align-items-center mb-4 gap-3">
+                        <h4 class="text-primary mb-0 w-25" id="current-category-title">Tất cả</h4>
+                        <div class="input-group w-50 shadow-sm">
+                            <span class="input-group-text bg-white border-end-0"><i class="fa-solid fa-magnifying-glass text-muted"></i></span>
+                            <input type="text" id="search-input" class="form-control border-start-0 ps-0" placeholder="Tìm tên sản phẩm..." oninput="searchProducts()">
+                        </div>
+                        <span class="text-muted small text-end w-25" id="product-count-label">Đang tải...</span>
+                    </div>
+                    <div class="product-list row g-4" id="product-container"></div>
+                </div>
+            </div>
+        </section>
+
+        <div class="modal fade" id="walletModal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header bg-success text-white">
+                        <h5 class="modal-title"><i class="fa-solid fa-wallet"></i> Ví Flora</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body text-start">
+                        <div class="text-center mb-4">
+                            <h5 class="text-muted">Số dư hiện tại</h5>
+                            <h2 class="text-success fw-bold" id="wallet-balance">0 đ</h2>
+                        </div>
+                        <hr>
+                        <h6 class="fw-bold mb-3 text-primary">Nạp tiền vào ví</h6>
+                        <div class="mb-3">
+                            <input type="number" id="topup-amount" class="form-control" placeholder="Nhập số tiền muốn nạp (VNĐ)">
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input topup-method" type="radio" name="topup" id="topup-qr-radio" checked>
+                            <label class="form-check-label" for="topup-qr-radio">Chuyển khoản / Quét mã QR</label>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input class="form-check-input topup-method" type="radio" name="topup" id="topup-card-radio">
+                            <label class="form-check-label" for="topup-card-radio">Thẻ nội địa / Visa / Mastercard</label>
+                        </div>
+                        <div id="topup-qr-display" class="text-center p-2 border rounded bg-light mb-3">
+                            <img src="./img/my-qr.png" width="150" alt="QR Nạp tiền">
+                            <p class="small mt-2 mb-0 fw-bold">Quét mã để nạp tiền vào tài khoản</p>
+                        </div>
+                        <button class="btn btn-success w-100 fw-bold" onclick="processTopup()">Xác nhận Nạp tiền</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="historyModal" tabindex="-1"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header bg-info text-white"><h5 class="modal-title">Lịch sử đơn hàng</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body"><table class="table"><tbody id="history-container"></tbody></table></div></div></div></div>
+
+        <footer class="bg-dark text-white py-4 mt-5 text-center">
+            <p class="mb-0">&copy; 2026 FLORA. Powered by <strong>TechNewLife</strong></p>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module">
+        import { db } from "./js/firebase-config.js";
+        import { collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+
+        let allProducts = []; 
+        let currentCategory = "Tất cả";
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        document.getElementById('cart-count').innerText = cart.length;
+
+        // TẢI SẢN PHẨM
+        async function fetchAllProducts() {
+            try {
+                const querySnapshot = await getDocs(collection(db, "products"));
+                allProducts = []; 
+                querySnapshot.forEach((doc) => {
+                    const sp = doc.data();
+                    allProducts.push({
+                        id: doc.id,
+                        ten: sp.name || "Sản phẩm",
+                        gia: sp.price || 0,
+                        anh: sp.ImageUrl || "./img/cate2_icon.webp",
+                        category: sp.category || "Khác"
+                    });
+                });
+                renderProducts(allProducts); 
+            } catch (error) { console.error(error); }
+        }
+
+        function renderProducts(productArray) {
+            document.getElementById("product-count-label").innerText = `Tìm thấy ${productArray.length} SP`;
+            let html = "";
+            productArray.forEach((item) => {
+                html += `
+                    <div class="col-lg-4 col-md-6 col-sm-6">
+                        <div class="card h-100 shadow-sm border-0">
+                            <img src="${item.anh}" class="card-img-top" style="height: 250px; object-fit: cover;">
+                            <div class="card-body text-center d-flex flex-column">
+                                <h6 class="card-title text-primary fw-bold mb-2">${item.ten}</h6>
+                                <p class="card-text text-danger fw-bold mb-3">${Number(item.gia).toLocaleString('vi-VN')}đ</p>
+                                <button class="btn btn-outline-primary w-100 mt-auto" style="border-radius: 20px;" onclick="addToCart('${item.ten}', ${item.gia}, '${item.anh}')">Thêm vào giỏ</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            document.getElementById("product-container").innerHTML = html || "<p class='text-center w-100'>Không tìm thấy sản phẩm.</p>";
+        }
+
+        // TÌM KIẾM & LỌC
+        window.filterData = function(categoryName, btnElement) {
+            currentCategory = categoryName;
+            document.getElementById("current-category-title").innerText = categoryName;
+            document.querySelectorAll("#category-list .list-group-item").forEach(btn => btn.classList.remove("active", "fw-bold"));
+            if(btnElement) btnElement.classList.add("active", "fw-bold");
+            runFilter();
+        };
+
+        window.searchProducts = function() { runFilter(); };
+
+        function runFilter() {
+            let keyword = document.getElementById("search-input").value.toLowerCase();
+            let filtered = allProducts;
+            if (currentCategory !== "Tất cả") filtered = filtered.filter(item => item.category === currentCategory);
+            if (keyword !== "") filtered = filtered.filter(item => item.ten.toLowerCase().includes(keyword));
+            renderProducts(filtered);
+        }
+
+        // VÍ & TÀI KHOẢN
+        window.viewWallet = function() {
+            if (!localStorage.getItem('user_session') && !localStorage.getItem('isAdmin')) {
+                alert("Vui lòng đăng nhập!"); window.location.href = 'login.html'; return;
+            }
+            let currentBal = parseInt(localStorage.getItem('wallet_balance')) || 0;
+            document.getElementById('wallet-balance').innerText = currentBal.toLocaleString('vi-VN') + " đ";
+            new bootstrap.Modal(document.getElementById('walletModal')).show();
+        };
+
+        window.processTopup = function() {
+            let amt = parseInt(document.getElementById('topup-amount').value);
+            if(!amt || amt < 10000) { alert("Nạp tối thiểu 10.000đ!"); return; }
+            let currentBal = parseInt(localStorage.getItem('wallet_balance')) || 0;
+            currentBal += amt;
+            localStorage.setItem('wallet_balance', currentBal);
+            document.getElementById('wallet-balance').innerText = currentBal.toLocaleString('vi-VN') + " đ";
+            alert(`Thành công! Số dư mới: ${currentBal.toLocaleString()}đ`);
+            document.getElementById('topup-amount').value = "";
+        };
+
+        window.viewHistory = async function() {
+            let userEmail = JSON.parse(localStorage.getItem('user_session'))?.user?.email || "admin@flora.com";
+            const q = query(collection(db, "orders"), where("emailKhach", "==", userEmail));
+            const snap = await getDocs(q);
+            let html = "";
+            snap.forEach(d => {
+                let o = d.data();
+                html += `<tr><td>${o.sanPham}</td><td class="text-danger">${Number(o.giaTien).toLocaleString()}đ</td><td><span class="badge bg-primary">${o.trangThai}</span></td></tr>`;
+            });
+            document.getElementById('history-container').innerHTML = html || "Chưa có đơn hàng.";
+            new bootstrap.Modal(document.getElementById('historyModal')).show();
+        };
+
+        window.addToCart = function(ten, gia, anh) {
+            cart.push({ ten, gia, anh });
+            localStorage.setItem('cart', JSON.stringify(cart));
+            document.getElementById('cart-count').innerText = cart.length;
+            alert("Đã thêm vào giỏ!");
+        };
+
+        window.logoutUser = function() {
+            localStorage.clear(); window.location.href = 'index.html';
+        };
+
+        fetchAllProducts();
+    </script>
+</body>
+</html>

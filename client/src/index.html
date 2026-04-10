@@ -5,23 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trang chủ - Flora</title>
-
     <link rel="shortcut icon" href="./img/cate2_icon.webp" type="image/x-icon">
 
-    <!--Bootrap 5 cdn-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!--FontAwesome cdn -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
-        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
 
-    <!--main css-->
     <link rel="stylesheet" href="./css/main.css">
 
-
-    <!--index.css-->
     <link rel="stylesheet" href="./css/index.css">
 
 
@@ -35,7 +26,7 @@
                     <div class="logo">
                         <img src="./img/cate2_icon.PNG" alt="FLORA" style="width: 100px;">
                     </div>
-                    <ul class=" nav pe-4 align-items-center">
+                    <ul class="nav pe-4 align-items-center">
                         <li class="nav-item">
                             <a href="./index.html" class="nav-link text-white">Home</a>
                         </li>
@@ -43,110 +34,501 @@
                             <a href="./menu.html" class="nav-link text-white">Mục</a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link text-white"><i class="fa-solid fa-bag-shopping"></i></a>
+                            <a href="#" class="nav-link text-white" onclick="viewWallet()">Ví</a>
                         </li>
-                        <div class="profile">
-                            <button type="button" id="profile-dropdown" class=" dropdown-toggle btn btn-outline-light"
-                                data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-user"></i>
-                                Tài Khoản
+                        <li class="nav-item">
+                            <a href="#" class="nav-link text-white" onclick="viewCart()">
+                                <i class="fa-solid fa-bag-shopping"></i> <span id="cart-count"
+                                    class="badge bg-danger rounded-pill">0</span>
+                            </a>
+                        </li>
+                        <div class="profile ms-2">
+                            <button type="button" id="profile-dropdown" class="dropdown-toggle btn btn-outline-light"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid fa-user"></i> Tài Khoản
                             </button>
                             <ul id="author-menu-drd" class="dropdown-menu" aria-labelledby="profile-dropdown">
                                 <li><a class="dropdown-item" href="./register.html">Đăng Kí</a></li>
                                 <li><a class="dropdown-item" href="./login.html">Đăng Nhập</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="#" onclick="viewHistory()"><i
+                                            class="fa-solid fa-clock-rotate-left"></i> Lịch sử đơn hàng</a></li>
+                                <li><a class="dropdown-item text-danger" href="#" onclick="logoutUser()"><i
+                                            class="fa-solid fa-right-from-bracket"></i> Đăng xuất</a></li>
                             </ul>
                         </div>
                     </ul>
                 </div>
-
-                <style>
-
-                </style>
-
-
             </header>
 
             <div class="banner-text text-start ps-5">
                 <h1 class="title text-white">Chào mừng đến với <span class="text-primary">FLORA</span></h1>
                 <p class="text-white">Trang sức chất lượng cao, quý phái và sang trọng!</p>
-                <button class="btn btn-primary px-5 py-2 rounded-pill mt-4 fw-bold">
-                    Mua Ngay
-                </button>
+                <button class="btn btn-primary px-5 py-2 rounded-pill mt-4 fw-bold"
+                    onclick="document.getElementById('san-pham').scrollIntoView({behavior: 'smooth'})">Mua Ngay</button>
             </div>
         </div>
 
-
         <section class="container mt-5">
-            <div class="row align-item-center">
+            <div class="row align-items-center">
                 <div class="col-lg-6 col-12 mb-4">
-                    <iframe class="roudered-md w-100" height="315" src="https://www.youtube.com/embed/6oc22PS0N2s"
-                        title="TRANG SỨC NỮ PNJ | LUÔN LÀ LỰA CHỌN CHÂN ÁI CỦA NÀNG ​| @PNJ Jewelry" frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    <iframe class="rounded w-100" height="315" src="https://www.youtube.com/embed/6oc22PS0N2s"
+                        title="TRANG SỨC NỮ PNJ" frameborder="0" allowfullscreen></iframe>
                 </div>
-
-
                 <div class="col-lg-6 col-12">
                     <h2 class="text-primary">FLORA-Trang sức nữ</h2>
-                    <p class="text-muted"> Chúng tôi mang tới những sản phẩm chất lượng, được đầu tư về thiết kế, minh
+                    <p class="text-muted">Chúng tôi mang tới những sản phẩm chất lượng, được đầu tư về thiết kế, minh
                         bạch về thông tin giao dịch hàng hoá và mang đến khách hàng dịch vụ hậu mãi trọn vẹn.</p>
                 </div>
             </div>
         </section>
 
-        <section class="container my-5">
+        <section class="container my-5" id="san-pham">
             <h3 class="text-center mb-4 text-primary">Sản phẩm mới nhất</h3>
-
-            <div class="product-list row g-4 py-4">
-
-            </div>
-            <div class="order-form" style="display: none;">
-               
-            </div>
-
-
+            <div class="product-list row g-4 py-4" id="product-container"></div>
         </section>
-        <footer class="bg-dark text-white py-5">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-4">
-                        <h5>Về chúng tôi</h5>
-                        <p> Địa chỉ: Thành phố Hải Phòng</p>
-                    </div>
-                    <div class="col-md-4">
-                        <h5>Đăng kí thông tin</h5>
-                        <div class="input-group mb-3">
-                            <input type="email" class="form-control" placeholder="Nhập email của bạn ...">
-                            <button type=" buttons" class="btn btn-primary">Gửi</button>
-                        </div>
-                    </div>
 
-                    <div class="col-md-4">
-                        <h5>Liên hệ</h5>
-                        <p>Hotline: 035 4602 831 (Hải Phòng) | 0347179903 (Hà Nội)</p>
+        <div class="modal fade" id="checkoutModal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header bg-primary text-white">
+                        <h5 class="modal-title"><i class="fa-solid fa-truck-fast"></i> Giao hàng & Thanh toán</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                     </div>
-                    <hr>
-                    <div class="text-center mt-4">
-                        <p class="text-light">&copy; 2026 FLORA. All rights reserved. Powered by
-                            <strong>TechNewLife</strong>
-                        </p>
+                    <form id="checkout-form">
+                        <div class="modal-body">
+                            <div class="alert alert-info py-2">
+                                Sản phẩm: <strong id="checkout-product-name">...</strong><br>
+                                Tổng tiền: <strong class="text-danger" id="checkout-product-price">...</strong>
+                            </div>
+                            <input type="hidden" id="hidden-pname">
+                            <input type="hidden" id="hidden-pprice">
+                            <input type="hidden" id="hidden-cart-indices">
+                            <div class="mb-3">
+                                <label class="form-label">Họ tên <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="c-name" required
+                                    placeholder="Nhập họ tên...">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">SĐT <span class="text-danger">*</span></label>
+                                <input type="tel" class="form-control" id="c-phone" required
+                                    placeholder="Nhập số điện thoại...">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Địa chỉ <span class="text-danger">*</span></label>
+                                <textarea class="form-control" id="c-address" rows="2" required
+                                    placeholder="Nhập địa chỉ nhà..."></textarea>
+                            </div>
+
+                            <hr>
+                            <h6 class="fw-bold text-primary"><i class="fa-solid fa-money-bill-wave"></i> Phương thức
+                                thanh toán</h6>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input payment-method" type="radio" name="payment" id="pay-cod"
+                                    value="Thanh toán khi nhận hàng (COD)" checked>
+                                <label class="form-check-label" for="pay-cod">Thanh toán khi nhận hàng (COD)</label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input payment-method" type="radio" name="payment" id="pay-qr"
+                                    value="Chuyển khoản / Quét QR">
+                                <label class="form-check-label" for="pay-qr">Chuyển khoản / Quét QR</label>
+                            </div>
+
+                            <div class="form-check mb-3">
+                                <input class="form-check-input payment-method" type="radio" name="payment"
+                                    id="pay-wallet" value="Thanh toán bằng Ví Flora">
+                                <label class="form-check-label d-flex justify-content-between w-100" for="pay-wallet">
+                                    <span>Thanh toán bằng Ví Flora</span>
+                                    <span class="badge bg-success" id="checkout-wallet-balance">Số dư: 0đ</span>
+                                </label>
+                            </div>
+
+                            <div id="wallet-error" style="display: none;" class="alert alert-danger py-2 small">
+                                <i class="fa-solid fa-circle-exclamation"></i> Số dư ví không đủ.
+                                <a href="#" class="fw-bold text-danger" onclick="openTopupFromCheckout()">Nạp thêm tiền
+                                    ngay?</a>
+                            </div>
+
+                            <div id="qr-section" style="display: none;"
+                                class="text-center p-3 bg-light rounded border border-info mb-3">
+                                <p class="text-muted small mb-1">Quét mã QR dưới đây để thanh toán</p>
+                                <img src="./img/maqr.jpg" alt="QR Code" width="120" class="border p-1 bg-white mb-2 shadow-sm">
+                                <p class="fw-bold text-primary mb-0">STK: 0347179903 - MB</p>
+                                <p class="small mb-0">Chủ TK: FLORA SHOP</p>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                            <button type="submit" class="btn btn-danger fw-bold">Xác nhận Đặt hàng</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="cartModal" tabindex="-1">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header bg-warning">
+                        <h5 class="modal-title fw-bold"><i class="fa-solid fa-cart-shopping"></i> Giỏ hàng của bạn</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-2 d-flex justify-content-between">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="check-all-cart"
+                                    onchange="toggleAllCartItems(this)">
+                                <label class="form-check-label fw-bold" for="check-all-cart">Chọn tất cả</label>
+                            </div>
+                        </div>
+                        <hr class="mt-0">
+                        <div id="cart-items-container"></div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <h5 class="text-danger fw-bold mb-0">Tổng: <span id="cart-total-price">0đ</span></h5>
+                        <div>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                            <button type="button" class="btn btn-primary" onclick="checkoutSelectedCart()">Thanh toán
+                                các món đã chọn</button>
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div class="modal fade" id="historyModal" tabindex="-1">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header bg-info text-white">
+                        <h5 class="modal-title"><i class="fa-solid fa-clock-rotate-left"></i> Lịch sử đơn hàng</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Sản phẩm</th>
+                                    <th>Tổng tiền</th>
+                                    <th>Ngày đặt</th>
+                                    <th>Thanh toán</th>
+                                    <th>Trạng thái</th>
+                                </tr>
+                            </thead>
+                            <tbody id="history-container"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="walletModal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header bg-success text-white">
+                        <h5 class="modal-title"><i class="fa-solid fa-wallet"></i> Ví Flora</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body text-start">
+                        <div class="text-center mb-4">
+                            <h5 class="text-muted">Số dư hiện tại</h5>
+                            <h2 class="text-success fw-bold" id="wallet-balance">0 đ</h2>
+                        </div>
+                        <hr>
+                        <h6 class="fw-bold mb-3 text-primary">Nạp tiền vào ví</h6>
+                        <div class="mb-3">
+                            <input type="number" id="topup-amount" class="form-control"
+                                placeholder="Nhập số tiền (VNĐ)">
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input topup-method" type="radio" name="topup" id="topup-qr-radio"
+                                checked>
+                            <label class="form-check-label" for="topup-qr-radio">Chuyển khoản / Quét mã QR</label>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input class="form-check-input topup-method" type="radio" name="topup"
+                                id="topup-card-radio">
+                            <label class="form-check-label" for="topup-card-radio">Thẻ ATM / Visa / Mastercard</label>
+                        </div>
+                        <div id="topup-qr-display" class="text-center p-2 border rounded bg-light mb-3">
+                            <img src="./img/maqr.jpg" width="120">
+                            <p class="small mt-2 mb-0 fw-bold">Quét mã để nạp tiền</p>
+                        </div>
+                        <button class="btn btn-success w-100 fw-bold" onclick="processTopup()">Xác nhận Nạp
+                            tiền</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="bg-dark text-white py-4 mt-5 text-center">
+            <p class="mb-0">&copy; 2026 FLORA. Powered by <strong>TechNewLife</strong></p>
         </footer>
     </div>
 
-    <!--Bootrap 5 cdn-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 
+    <script type="module">
+        import { db } from "./js/firebase-config.js";
+        import { collection, getDocs, addDoc, query, where } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
 
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        document.getElementById('cart-count').innerText = cart.length;
 
-    <script type="module" src="./js/main.js"></script>
-    <script type="module" src="./js/index.js"></script>
-    
+        // Load sản phẩm
+        async function loadProducts() {
+            const productContainer = document.getElementById("product-container");
+            try {
+                const querySnapshot = await getDocs(collection(db, "products"));
+                let html = "";
+                querySnapshot.forEach((doc) => {
+                    const sp = doc.data();
+                    const hinhAnh = sp.ImageUrl || "./img/cate2_icon.webp";
+                    const ten = sp.name || "Sản phẩm";
+                    const gia = sp.price || 0;
+                    html += `
+                        <div class="col-md-3 col-sm-6 mb-4">
+                            <div class="card h-100 shadow-sm border-0">
+                                <img src="${hinhAnh}" class="card-img-top" alt="${ten}" style="height: 250px; object-fit: cover;">
+                                <div class="card-body text-center d-flex flex-column">
+                                    <h6 class="card-title text-primary fw-bold mb-2">${ten}</h6>
+                                    <p class="card-text text-danger fw-bold mb-3">${Number(gia).toLocaleString('vi-VN')}đ</p>
+                                    <div class="d-flex gap-2 mt-auto">
+                                        <button class="btn btn-outline-primary w-50" style="border-radius: 20px;" onclick="addToCart('${ten}', ${gia}, '${hinhAnh}')">Giỏ</button>
+                                        <button class="btn btn-danger w-50 fw-bold" style="border-radius: 20px;" onclick="triggerBuyNow('${ten}', ${gia})">Mua ngay</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                productContainer.innerHTML = html;
+            } catch (error) {
+                productContainer.innerHTML = "<p class='text-center text-danger'>Lỗi kết nối CSDL!</p>";
+            }
+        }
+        loadProducts();
 
+        // ---------------- GIỎ HÀNG CẢI TIẾN ----------------
+        window.addToCart = function (ten, gia, anh) {
+            cart.push({ ten, gia, anh });
+            localStorage.setItem('cart', JSON.stringify(cart));
+            document.getElementById('cart-count').innerText = cart.length;
+            alert("Đã thêm vào giỏ hàng!");
+        };
 
+        window.viewCart = function () {
+            let html = "";
+            if (cart.length === 0) {
+                html = "<p class='text-center text-muted py-3'>Giỏ hàng của bạn đang trống.</p>";
+            } else {
+                cart.forEach((item, index) => {
+                    html += `
+                        <div class="d-flex align-items-center mb-3 pb-3 border-bottom">
+                            <input class="form-check-input me-3 cart-item-check" type="checkbox" value="${index}" onchange="calcCartTotal()" style="transform: scale(1.3);">
+                            <img src="${item.anh}" width="60" class="rounded me-3">
+                            <div class="flex-grow-1">
+                                <h6 class="mb-0 text-primary">${item.ten}</h6>
+                                <small class="text-danger fw-bold">${Number(item.gia).toLocaleString('vi-VN')}đ</small>
+                            </div>
+                            <button class="btn btn-sm btn-outline-danger" onclick="removeFromCart(${index})"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    `;
+                });
+            }
+            document.getElementById('cart-items-container').innerHTML = html;
+            document.getElementById('cart-total-price').innerText = "0đ"; // Mặc định 0đ vì chưa tích món nào
+            document.getElementById('check-all-cart').checked = false;
+            new bootstrap.Modal(document.getElementById('cartModal')).show();
+        };
+
+        window.toggleAllCartItems = function (source) {
+            let checkboxes = document.querySelectorAll('.cart-item-check');
+            checkboxes.forEach(cb => cb.checked = source.checked);
+            calcCartTotal();
+        };
+
+        window.calcCartTotal = function () {
+            let total = 0;
+            document.querySelectorAll('.cart-item-check:checked').forEach(cb => {
+                total += Number(cart[cb.value].gia);
+            });
+            document.getElementById('cart-total-price').innerText = total.toLocaleString('vi-VN') + "đ";
+        };
+
+        window.removeFromCart = function (index) {
+            cart.splice(index, 1);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            document.getElementById('cart-count').innerText = cart.length;
+            viewCart();
+        };
+
+        window.checkoutSelectedCart = function () {
+            if (!checkLogin()) return;
+            let checkedBoxes = document.querySelectorAll('.cart-item-check:checked');
+            if (checkedBoxes.length === 0) {
+                alert("Vui lòng tích chọn ít nhất 1 sản phẩm để thanh toán!");
+                return;
+            }
+
+            let selectedNames = [];
+            let totalGia = 0;
+            let checkedIndices = [];
+
+            checkedBoxes.forEach(cb => {
+                let idx = parseInt(cb.value);
+                checkedIndices.push(idx);
+                selectedNames.push(cart[idx].ten);
+                totalGia += Number(cart[idx].gia);
+            });
+
+            bootstrap.Modal.getInstance(document.getElementById('cartModal')).hide();
+            // Truyền mảng vị trí sản phẩm vào trường ẩn
+            document.getElementById('hidden-cart-indices').value = JSON.stringify(checkedIndices);
+            triggerBuyNow(selectedNames.join(', '), totalGia);
+        };
+
+        // ---------------- ĐẶT HÀNG ----------------
+        function checkLogin() {
+            if (!localStorage.getItem('user_session') && !localStorage.getItem('isAdmin')) {
+                alert("Vui lòng Đăng nhập tài khoản!"); window.location.href = 'login.html'; return false;
+            }
+            return true;
+        }
+
+        window.triggerBuyNow = function (tenSp, giaSp) {
+            if (!checkLogin()) return;
+            // Nếu bấm Mua ngay trực tiếp, xóa mảng vị trí giỏ hàng đi để tránh xóa nhầm
+            if (!document.getElementById('hidden-cart-indices').value.includes('[')) {
+                document.getElementById('hidden-cart-indices').value = "";
+            }
+            document.getElementById('checkout-product-name').innerText = tenSp;
+            document.getElementById('checkout-product-price').innerText = Number(giaSp).toLocaleString('vi-VN') + "đ";
+            document.getElementById('hidden-pname').value = tenSp;
+            document.getElementById('hidden-pprice').value = giaSp;
+            new bootstrap.Modal(document.getElementById('checkoutModal')).show();
+        };
+
+        document.querySelectorAll('.payment-method').forEach(radio => {
+            radio.addEventListener('change', function () {
+                document.getElementById('qr-section').style.display = (this.id === 'pay-qr') ? 'block' : 'none';
+            });
+        });
+
+        document.getElementById('checkout-form').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
+            let userEmail = localStorage.getItem('isAdmin') === 'true' ? "admin@flora.com" : (JSON.parse(localStorage.getItem('user_session'))?.user?.email || "Khách");
+
+            try {
+                await addDoc(collection(db, "orders"), {
+                    emailKhach: userEmail,
+                    tenKhach: document.getElementById('c-name').value + " (" + document.getElementById('c-address').value + ")",
+                    soDienThoai: document.getElementById('c-phone').value,
+                    sanPham: document.getElementById('hidden-pname').value,
+                    giaTien: Number(document.getElementById('hidden-pprice').value),
+                    phuongThuc: paymentMethod,
+                    ngayDat: new Date().toLocaleString('vi-VN'),
+                    trangThai: "Chờ xử lý"
+                });
+
+                alert("🎉 Đặt hàng thành công!");
+
+                // XÓA MÓN TRONG GIỎ NẾU MUA TỪ GIỎ HÀNG
+                let hiddenIndices = document.getElementById('hidden-cart-indices').value;
+                if (hiddenIndices !== "") {
+                    let toRemove = JSON.parse(hiddenIndices);
+                    // Lọc giữ lại những index KHÔNG nằm trong mảng toRemove
+                    cart = cart.filter((item, index) => !toRemove.includes(index));
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    document.getElementById('cart-count').innerText = cart.length;
+                    document.getElementById('hidden-cart-indices').value = ""; // Xóa dữ liệu ẩn
+                }
+
+                bootstrap.Modal.getInstance(document.getElementById('checkoutModal')).hide();
+                this.reset(); document.getElementById('qr-section').style.display = 'none';
+            } catch (error) { alert("Lỗi: " + error.message); }
+        });
+
+        // ---------------- VÍ & LỊCH SỬ ----------------
+        let walletBal = parseInt(localStorage.getItem('wallet_balance')) || 0;
+
+        window.viewWallet = function () {
+            if (!checkLogin()) return;
+            document.getElementById('wallet-balance').innerText = walletBal.toLocaleString('vi-VN') + " đ";
+            new bootstrap.Modal(document.getElementById('walletModal')).show();
+        };
+
+        // Ẩn hiện QR khi chọn cách nạp tiền
+        document.querySelectorAll('.topup-method').forEach(radio => {
+            radio.addEventListener('change', function () {
+                document.getElementById('topup-qr-display').style.display = (this.id === 'topup-qr-radio') ? 'block' : 'none';
+            });
+        });
+
+        window.processTopup = function () {
+            let amt = parseInt(document.getElementById('topup-amount').value);
+            if (!amt || amt < 10000) { alert("Vui lòng nhập số tiền từ 10.000đ trở lên!"); return; }
+            walletBal += amt;
+            localStorage.setItem('wallet_balance', walletBal);
+            document.getElementById('wallet-balance').innerText = walletBal.toLocaleString('vi-VN') + " đ";
+            alert(`✅ Nạp thành công ${amt.toLocaleString('vi-VN')}đ vào ví Flora!`);
+            document.getElementById('topup-amount').value = "";
+        };
+
+        window.viewHistory = async function () {
+            if (!checkLogin()) return;
+
+            let userEmail = localStorage.getItem('isAdmin') === 'true' ? "admin@flora.com" : (JSON.parse(localStorage.getItem('user_session'))?.user?.email || "Khách");
+
+            try {
+                // Lấy tất cả đơn hàng của email này, không phân biệt trạng thái
+                const q = query(collection(db, "orders"), where("emailKhach", "==", userEmail));
+                const querySnapshot = await getDocs(q);
+
+                let html = "";
+                querySnapshot.forEach((doc) => {
+                    const order = doc.data();
+
+                    // Thiết lập màu sắc Badge dựa trên trạng thái (Admin đổi thì bên này đổi theo)
+                    let badgeClass = "";
+                    let statusText = order.trangThai;
+
+                    if (statusText === 'Đã giao') {
+                        badgeClass = "bg-success"; // Màu xanh lá
+                        statusText = '<i class="fa-solid fa-check-double"></i> Đã giao đến bạn';
+                    } else if (statusText === 'Đang giao') {
+                        badgeClass = "bg-warning text-dark"; // Màu vàng
+                        statusText = '<i class="fa-solid fa-truck"></i> Đang trên đường giao';
+                    } else {
+                        badgeClass = "bg-secondary"; // Màu xám (Chờ xử lý)
+                        statusText = '<i class="fa-solid fa-clock"></i> Đang chuẩn bị hàng';
+                    }
+
+                    html += `
+                <tr class="${order.trangThai === 'Đã giao' ? 'table-light' : ''}">
+                    <td>
+                        <div class="fw-bold">${order.sanPham}</div>
+                        <small class="text-muted">Ngày đặt: ${order.ngayDat}</small>
+                    </td>
+                    <td class="fw-bold text-danger">${Number(order.giaTien).toLocaleString('vi-VN')}đ</td>
+                    <td><small class="text-primary">${order.phuongThuc || 'COD'}</small></td>
+                    <td><span class="badge ${badgeClass} p-2">${statusText}</span></td>
+                </tr>
+            `;
+                });
+
+                if (html === "") html = "<tr><td colspan='4' class='text-center text-muted py-4'>Bạn chưa có lịch sử mua hàng nào.</td></tr>";
+
+                document.getElementById('history-container').innerHTML = html;
+                new bootstrap.Modal(document.getElementById('historyModal')).show();
+
+            } catch (error) {
+                alert("Lỗi khi tải lịch sử: " + error);
+            }
+        };
+    </script>
 </body>
 
 </html>
