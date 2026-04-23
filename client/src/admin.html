@@ -5,11 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - Quản lý Flora</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        .card-stats { border-left: 5px solid #0d6efd; }
-        .revenue-value { font-size: 2rem; font-weight: bold; color: #198754; }
+        :root { --primary-gold: #b89f5d; }
+        .card-stats { border-left: 5px solid #0d6efd; height: 100%; }
+        .revenue-value { font-size: 1.8rem; font-weight: bold; color: #198754; }
         .product-img-preview { width: 50px; height: 50px; object-fit: cover; border-radius: 4px; }
+        
+        /* Thanh tiến trình trạng thái đơn hàng */
+        .status-timeline { display: flex; align-items: center; justify-content: space-between; min-width: 280px; margin: 0 auto; }
+        .status-step { text-align: center; position: relative; z-index: 1; flex: 1; }
+        .status-step i { font-size: 1.1rem; background: #fff; padding: 5px; border-radius: 50%; border: 1px solid #dee2e6; }
+        .status-step span { display: block; font-size: 0.7rem; margin-top: 4px; font-weight: 600; white-space: nowrap; }
+        .status-line { width: 40px; height: 3px; background-color: #dee2e6; margin-bottom: 15px; }
+        .line-active { background-color: #0dcaf0 !important; }
+        .line-active-success { background-color: #198754 !important; }
+        .text-active-warn { color: #ffc107 !important; }
+        .text-active-info { color: #0dcaf0 !important; }
+        .text-active-success { color: #198754 !important; }
     </style>
 </head>
 <body class="bg-light">
@@ -21,19 +34,27 @@
     </nav>
 
     <div class="container mt-4 mb-5">
-        <div class="row mb-4">
-            <div class="col-md-6">
+        <div class="row mb-4 g-3">
+            <div class="col-md-4">
                 <div class="card shadow-sm card-stats">
                     <div class="card-body">
-                        <h6 class="text-muted text-uppercase">Tổng doanh thu (Đã giao)</h6>
+                        <h6 class="text-muted text-uppercase small">Tổng doanh thu</h6>
                         <div class="revenue-value" id="total-revenue">0đ</div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
+                <div class="card shadow-sm card-stats" style="border-left-color: #17a2b8;">
+                    <div class="card-body">
+                        <h6 class="text-muted text-uppercase small">Doanh thu tháng này</h6>
+                        <div class="revenue-value" id="monthly-revenue" style="color: #17a2b8;">0đ</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
                 <div class="card shadow-sm card-stats" style="border-left-color: #ffc107;">
                     <div class="card-body">
-                        <h6 class="text-muted text-uppercase">Đơn hàng mới</h6>
+                        <h6 class="text-muted text-uppercase small">Đơn hàng mới (Chờ xử lý)</h6>
                         <div class="revenue-value" id="order-count" style="color: #ffc107;">0</div>
                     </div>
                 </div>
@@ -41,8 +62,8 @@
         </div>
 
         <div class="card shadow-sm mb-4">
-            <div class="card-header bg-white py-3">
-                <h5 class="mb-0 text-primary"><i class="fa-solid fa-list"></i> Danh sách đơn hàng</h5>
+            <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+                <h5 class="mb-0 text-primary"><i class="fa-solid fa-cart-shopping"></i> Quản lý đơn hàng tự động</h5>
             </div>
             <div class="card-body table-responsive">
                 <table class="table table-hover align-middle">
@@ -52,7 +73,7 @@
                             <th>Sản phẩm</th>
                             <th>Giá tiền</th>
                             <th>Ngày đặt</th>
-                            <th>Trạng thái</th>
+                            <th class="text-center">Trạng thái xử lý</th>
                             <th>Thao tác</th>
                         </tr>
                     </thead>
@@ -63,19 +84,13 @@
 
         <div class="card shadow-sm border-info">
             <div class="card-header bg-white py-3">
-                <h5 class="mb-0 text-info"><i class="fa-solid fa-gem"></i> Quản lý sản phẩm & Mục</h5>
+                <h5 class="mb-0 text-info"><i class="fa-solid fa-gem"></i> Danh mục sản phẩm</h5>
             </div>
             <div class="card-body">
-                <form id="add-product-form" class="row g-2 mb-4 align-items-center p-3 bg-light rounded border">
-                    <div class="col-md-3">
-                        <input type="text" id="p-name" class="form-control" placeholder="Tên sản phẩm" required>
-                    </div>
-                    <div class="col-md-2">
-                        <input type="number" id="p-price" class="form-control" placeholder="Giá (VNĐ)" required>
-                    </div>
-                    <div class="col-md-3">
-                        <input type="url" id="p-image" class="form-control" placeholder="Link ảnh (URL)" required>
-                    </div>
+                <form id="add-product-form" class="row g-2 mb-4 align-items-center p-3 bg-white rounded border shadow-sm">
+                    <div class="col-md-3"><input type="text" id="p-name" class="form-control" placeholder="Tên sản phẩm" required></div>
+                    <div class="col-md-2"><input type="number" id="p-price" class="form-control" placeholder="Giá (VNĐ)" required></div>
+                    <div class="col-md-3"><input type="url" id="p-image" class="form-control" placeholder="Link ảnh (URL)" required></div>
                     <div class="col-md-2">
                         <select id="p-category" class="form-select" required>
                             <option value="Nhẫn">Nhẫn</option>
@@ -86,18 +101,16 @@
                             <option value="Khác">Khác</option>
                         </select>
                     </div>
-                    <div class="col-md-2">
-                        <button type="submit" class="btn btn-success w-100"><i class="fa-solid fa-plus"></i> Thêm</button>
-                    </div>
+                    <div class="col-md-2"><button type="submit" class="btn btn-success w-100">Thêm mới</button></div>
                 </form>
 
                 <div class="table-responsive">
                     <table class="table table-hover align-middle text-center">
                         <thead class="table-light">
                             <tr>
-                                <th>Hình ảnh</th>
+                                <th>Ảnh</th>
                                 <th>Tên sản phẩm</th>
-                                <th>Danh mục</th>
+                                <th>Loại</th>
                                 <th>Giá bán</th>
                                 <th>Thao tác</th>
                             </tr>
@@ -113,7 +126,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header bg-warning">
-                    <h5 class="modal-title fw-bold"><i class="fa-solid fa-pen"></i> Sửa sản phẩm</h5>
+                    <h5 class="modal-title fw-bold">Chỉnh sửa sản phẩm</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <form id="edit-product-form">
@@ -144,8 +157,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                        <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                        <button type="submit" class="btn btn-primary">Cập nhật</button>
                     </div>
                 </form>
             </div>
@@ -162,39 +175,88 @@
         import { db } from "./js/firebase-config.js"; 
         import { collection, onSnapshot, doc, updateDoc, deleteDoc, addDoc } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
 
+        // Hàm xử lý chuỗi "22:36:21 10/4/2026" thành Date Object
+        function parseOrderDate(dateString) {
+            if (!dateString) return new Date();
+            try {
+                const parts = dateString.split(' ');
+                const datePart = parts[parts.length - 1]; // Lấy "10/4/2026"
+                const [day, month, year] = datePart.split('/');
+                return new Date(year, month - 1, day); // month bắt đầu từ 0
+            } catch(e) { 
+                return new Date(); 
+            }
+        }
+
         // ---- QUẢN LÝ ĐƠN HÀNG ----
         onSnapshot(collection(db, "orders"), (snapshot) => {
-            let html = "", totalRevenue = 0, count = 0;
+            let html = "", totalAll = 0, totalMonth = 0, newCount = 0;
+            const now = new Date();
+            const curMonth = now.getMonth();
+            const curYear = now.getFullYear();
+
             snapshot.forEach((orderDoc) => {
                 const order = orderDoc.data();
                 const id = orderDoc.id;
-                const gia = parseInt(order.giaTien || 0);
-                if (order.trangThai === "Đã giao") totalRevenue += gia;
-                count++;
+                const price = parseInt(order.giaTien || 0);
+                const orderDate = parseOrderDate(order.ngayDat);
+                
+                // Tính toán chênh lệch giờ
+                const diffHours = (now - orderDate) / (1000 * 60 * 60);
+                
+                let step = 1, statusText = "Chờ xử lý";
+                if (diffHours >= 72) { step = 3; statusText = "Đã giao"; }
+                else if (diffHours >= 24) { step = 2; statusText = "Đang giao"; }
+                else { step = 1; statusText = "Chờ xử lý"; newCount++; }
+
+                // Tự động đồng bộ trạng thái lên Firebase
+                if (order.trangThai !== statusText) {
+                    updateDoc(doc(db, "orders", id), { trangThai: statusText });
+                }
+
+                // Cộng dồn doanh thu
+                if (step === 3) {
+                    totalAll += price;
+                    if (orderDate.getMonth() === curMonth && orderDate.getFullYear() === curYear) {
+                        totalMonth += price;
+                    }
+                }
+
                 html += `
                     <tr>
                         <td><strong>${order.tenKhach || 'Khách'}</strong><br><small class="text-muted">${order.soDienThoai}</small></td>
                         <td>${order.sanPham}</td>
-                        <td class="fw-bold">${gia.toLocaleString()}đ</td>
-                        <td>${order.ngayDat}</td>
+                        <td class="fw-bold text-danger">${price.toLocaleString()}đ</td>
+                        <td class="small">${order.ngayDat}</td>
                         <td>
-                            <select class="form-select form-select-sm" onchange="updateStatus('${id}', this.value)">
-                                <option value="Chờ xử lý" ${order.trangThai === 'Chờ xử lý' ? 'selected' : ''}>Chờ xử lý</option>
-                                <option value="Đang giao" ${order.trangThai === 'Đang giao' ? 'selected' : ''}>Đang giao</option>
-                                <option value="Đã giao" ${order.trangThai === 'Đã giao' ? 'selected' : ''}>Đã giao</option>
-                            </select>
+                            <div class="status-timeline">
+                                <div class="status-step">
+                                    <i class="fa-solid fa-clock ${step >= 1 ? 'text-active-warn border-warning' : 'text-muted'}"></i>
+                                    <span class="${step >= 1 ? 'text-active-warn' : 'text-muted'}">Chờ xử lý</span>
+                                </div>
+                                <div class="status-line ${step >= 2 ? 'line-active' : ''}"></div>
+                                <div class="status-step">
+                                    <i class="fa-solid fa-truck-fast ${step >= 2 ? 'text-active-info border-info' : 'text-muted'}"></i>
+                                    <span class="${step >= 2 ? 'text-active-info' : 'text-muted'}">Đang giao</span>
+                                </div>
+                                <div class="status-line ${step >= 3 ? 'line-active-success' : ''}"></div>
+                                <div class="status-step">
+                                    <i class="fa-solid fa-circle-check ${step >= 3 ? 'text-active-success border-success' : 'text-muted'}"></i>
+                                    <span class="${step >= 3 ? 'text-active-success' : 'text-muted'}">Đã giao</span>
+                                </div>
+                            </div>
                         </td>
-                        <td><button class="btn btn-outline-danger btn-sm" onclick="deleteOrder('${id}')"><i class="fa fa-trash"></i></button></td>
+                        <td><button class="btn btn-light btn-sm text-danger shadow-sm" onclick="deleteOrder('${id}')"><i class="fa fa-trash"></i></button></td>
                     </tr>
                 `;
             });
-            document.getElementById("order-list-admin").innerHTML = html;
-            document.getElementById("total-revenue").innerText = totalRevenue.toLocaleString() + "đ";
-            document.getElementById("order-count").innerText = count;
+            document.getElementById("order-list-admin").innerHTML = html || "<tr><td colspan='6' class='text-center'>Không có đơn hàng</td></tr>";
+            document.getElementById("total-revenue").innerText = totalAll.toLocaleString() + "đ";
+            document.getElementById("monthly-revenue").innerText = totalMonth.toLocaleString() + "đ";
+            document.getElementById("order-count").innerText = newCount;
         });
 
-        window.updateStatus = async (id, newStatus) => { await updateDoc(doc(db, "orders", id), { trangThai: newStatus }); };
-        window.deleteOrder = async (id) => { if(confirm("Xóa đơn hàng này?")) await deleteDoc(doc(db, "orders", id)); };
+        window.deleteOrder = async (id) => { if(confirm("Xóa đơn hàng này khỏi hệ thống?")) await deleteDoc(doc(db, "orders", id)); };
 
         // ---- QUẢN LÝ SẢN PHẨM ----
         onSnapshot(collection(db, "products"), (snapshot) => {
@@ -202,43 +264,33 @@
             snapshot.forEach((pDoc) => {
                 const sp = pDoc.data();
                 const id = pDoc.id;
-                const anh = sp.ImageUrl || './img/cate2_icon.webp';
-                const ten = sp.name || 'Chưa có tên';
-                const gia = sp.price || 0;
-                const loai = sp.category || 'Khác';
-
                 html += `
                     <tr>
-                        <td><img src="${anh}" class="product-img-preview" alt="img"></td>
-                        <td class="fw-bold">${ten}</td>
-                        <td><span class="badge bg-secondary">${loai}</span></td>
-                        <td class="text-danger fw-bold">${Number(gia).toLocaleString()}đ</td>
+                        <td><img src="${sp.ImageUrl}" class="product-img-preview" alt="sp"></td>
+                        <td class="fw-bold">${sp.name}</td>
+                        <td><span class="badge bg-secondary">${sp.category}</span></td>
+                        <td class="text-danger fw-bold">${Number(sp.price).toLocaleString()}đ</td>
                         <td>
-                            <button class="btn btn-warning btn-sm me-1" onclick="openEditModal('${id}', \`${ten}\`, ${gia}, '${anh}', '${loai}')"><i class="fa fa-pen"></i></button>
+                            <button class="btn btn-warning btn-sm" onclick="openEditModal('${id}', \`${sp.name}\`, ${sp.price}, '${sp.ImageUrl}', '${sp.category}')"><i class="fa fa-pen"></i></button>
                             <button class="btn btn-danger btn-sm" onclick="deleteProduct('${id}')"><i class="fa fa-trash"></i></button>
                         </td>
-                    </tr>
-                `;
+                    </tr>`;
             });
-            document.getElementById("product-list-admin").innerHTML = html || "<tr><td colspan='5'>Chưa có sản phẩm.</td></tr>";
+            document.getElementById("product-list-admin").innerHTML = html;
         });
 
-        // Thêm Sản Phẩm
         document.getElementById("add-product-form").addEventListener('submit', async (e) => {
             e.preventDefault();
-            try {
-                await addDoc(collection(db, "products"), {
-                    name: document.getElementById('p-name').value,
-                    price: Number(document.getElementById('p-price').value),
-                    ImageUrl: document.getElementById('p-image').value,
-                    category: document.getElementById('p-category').value
-                });
-                e.target.reset();
-            } catch (error) { alert("Lỗi thêm: " + error.message); }
+            await addDoc(collection(db, "products"), {
+                name: document.getElementById('p-name').value,
+                price: Number(document.getElementById('p-price').value),
+                ImageUrl: document.getElementById('p-image').value,
+                category: document.getElementById('p-category').value
+            });
+            e.target.reset();
         });
 
-        // Mở Modal Sửa Sản Phẩm
-        window.openEditModal = function(id, name, price, img, category) {
+        window.openEditModal = (id, name, price, img, category) => {
             document.getElementById('edit-p-id').value = id;
             document.getElementById('edit-p-name').value = name;
             document.getElementById('edit-p-price').value = price;
@@ -247,24 +299,18 @@
             new bootstrap.Modal(document.getElementById('editProductModal')).show();
         };
 
-        // Lưu Sửa Sản Phẩm
         document.getElementById('edit-product-form').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const id = document.getElementById('edit-p-id').value;
-            try {
-                await updateDoc(doc(db, "products", id), {
-                    name: document.getElementById('edit-p-name').value,
-                    price: Number(document.getElementById('edit-p-price').value),
-                    ImageUrl: document.getElementById('edit-p-image').value,
-                    category: document.getElementById('edit-p-category').value
-                });
-                bootstrap.Modal.getInstance(document.getElementById('editProductModal')).hide();
-            } catch (error) { alert("Lỗi sửa: " + error.message); }
+            await updateDoc(doc(db, "products", document.getElementById('edit-p-id').value), {
+                name: document.getElementById('edit-p-name').value,
+                price: Number(document.getElementById('edit-p-price').value),
+                ImageUrl: document.getElementById('edit-p-image').value,
+                category: document.getElementById('edit-p-category').value
+            });
+            bootstrap.Modal.getInstance(document.getElementById('editProductModal')).hide();
         });
 
-        window.deleteProduct = async (id) => {
-            if(confirm("Xóa sản phẩm này?")) await deleteDoc(doc(db, "products", id));
-        };
+        window.deleteProduct = async (id) => { if(confirm("Xóa sản phẩm này?")) await deleteDoc(doc(db, "products", id)); };
     </script>
 </body>
 </html>
